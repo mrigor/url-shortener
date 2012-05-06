@@ -1,0 +1,21 @@
+~ How do I use it?
+
+  * Install Flask (http://flask.pocoo.org/docs/installation/#installation)
+  * Start the Sqllite DB from python interpreter:
+    >>>from url_shortener import init_db; init_db()
+  * Run a local server with 'python url_shortener'
+  * Now you can send JSON data to http://localhost:5000/shorten_url
+    Example:
+      "{'custome_short_code': 'abcdef', 'long_url': 'http://google.com/'}"
+    Response is in JSON format as well with 'success' and 'short_code' keys.
+    If an error occurs, a 'message' key will contain an explanation.
+
+
+~ How do I run tests?
+
+  `python tests.py`
+
+~ Design notes
+
+  * Caching server such as Redis could be used to store existing URLs. This would decrease latency but requires large memory consumption and supporting scripts to warm the cache on cold starts.
+  * I chose to use 302 temporary redirect status code because users with custom urls will probably want to update their long_url.
