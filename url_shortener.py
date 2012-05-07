@@ -63,7 +63,7 @@ def add_url():
         except ValueError, ex:
           return jsonify(success=False, message='Could not parse json.')
 
-      if not data or not data['long_url']:
+      if not data or not data.get('long_url'):
         return jsonify(success=False, message='Required parameter "long_url" missing.')
 
       long_url, custom_url = data.get('long_url'), data.get('custom_short_code')
