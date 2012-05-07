@@ -66,6 +66,13 @@ class ShortenerTestCase(unittest.TestCase):
         assert data['success'] == False
         assert data['message'] == 'Only alphanumeric characters are supported for custom urls.'
 
+    def test_custom_url_too_long(self):
+        rv = self.app.post('/shorten_url',
+            data='{"custom_short_code":"%s", "long_url":"a"}' % ("a" * 101))
+        data = json.loads(rv.data)
+        assert data['success'] == False
+        assert data['message'] == 'Custom URL is too long.'
+
     def test_custom_url_collision(self):
         rv = self.app.post('/shorten_url',
             data='{"custom_short_code":"abcdef", "long_url":"http://google.com/"}',

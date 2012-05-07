@@ -71,8 +71,11 @@ def add_url():
         id, url = _get_short_url(custom_url)
         if url:
           return jsonify(success=False, message='Custom URL already taken.')
-        elif re.match(r'[^0-9a-zA-Z]', custom_url):
-          return jsonify(success=False, message='Only alphanumeric characters are supported for custom urls.')
+        else:
+          if re.match(r'[^0-9a-zA-Z]', custom_url):
+            return jsonify(success=False, message='Only alphanumeric characters are supported for custom urls.')
+          if len(custom_url) > 100:
+            return jsonify(success=False, message='Custom URL is too long.')
 
 
       if custom_url:
